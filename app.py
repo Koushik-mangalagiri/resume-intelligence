@@ -1,6 +1,7 @@
 import streamlit as st
 from utils import extract_resume_text
 from analyzer import analyze_resume
+from pdf_generator import create_pdf
 
 # =========================
 # PAGE CONFIG
@@ -186,6 +187,20 @@ if uploaded_file:
                 resume_text,
                 height=400
             )
+        st.markdown("---")
+
+        pdf = create_pdf(
+            result,
+            job_role if job_role else "General"
+        )
+
+        st.download_button(
+            label="📥 Download PDF Report",
+            data=pdf,
+            file_name="Resume_Intelligence_Report.pdf",
+            mime="application/pdf",
+            use_container_width=True
+        )
 
 # =========================
 # FOOTER
